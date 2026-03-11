@@ -33,12 +33,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --- CRUDs Automáticos (apiResource) ---
     // Esto crea GET, POST, PUT y DELETE para cada uno
-    Route::apiResource('alumnos', AlumnoController::class);
-    Route::apiResource('maestros', MaestroController::class);
-    Route::apiResource('rubricas', RubricaController::class);
+    Route::middleware('SoloMaestro')->group(function(){
+        Route::apiResource('alumnos', AlumnoController::class);
+        Route::apiResource('maestros', MaestroController::class);
+        Route::apiResource('rubricas', RubricaController::class);
+        Route::apiResource('grupos', GrupoController::class);
+    });
+   
     Route::apiResource('exposiciones', ExposicionController::class);
     Route::apiResource('evaluaciones', EvaluacionController::class);
-    Route::apiResource('grupos', GrupoController::class);
     Route::apiResource('equipos', EquipoController::class);
 
     // --- Rutas Especiales (Lógica Extra) ---

@@ -68,15 +68,38 @@ class AlumnoController extends Controller
     // Actualizar datos
     public function update(Request $request, $id)
     {
-        $alumno = Alumno::where('id_usuario', $id)->first();
-        if (!$alumno) return $this->sendError('Alumno no encontrado.');
+        $userAuthenticated = auth()->user();
+
+        // 1. Regla de Negocio: Si el usuario autenticado es Alumno, 
+        // no puede editar a otros y mucho menos su rol.
+        if ($userAuthenticated->esAlumno() && $userAuthenticated->id_usuario != $id) {
+            return $this->sendError('No tienes permiso para editar a otros usuarios.', [], 403);
+        }
 
         $usuario = User::find($id);
+        if (!$usuario) return $this->sendError('Usuario no encontrado.');
 
-        $usuario->update($request->only(['nombre', 'email']));
-        $alumno->update($request->only(['num_ctrl']));
+        // 2. Regla de Negocio: Solo el Maestro puede cambiar el id_rol
+        $datosUsuario = $request->only(['nombre', 'email']);
+        
+        if ($request->has('id_rol')) {
+            if ($userAuthenticated->esMaestro()) {
+                $datosUsuario['id_rol'] = $request->id_rol;
+            } else {
+                // Si un alumno intenta mandar 'id_rol', lo ignoramos o lanzamos error
+                return $this->sendError('No tienes permisos para modificar el rol.', [], 403);
+            }
+        }
 
-        return $this->sendResponse($alumno->load('usuario'), 'Alumno actualizado.');
+        $usuario->update($datosUsuario);
+        
+        // Actualizar datos de la tabla alumnos si es necesario
+        $alumno = Alumno::where('id_usuario', $id)->first();
+        if ($alumno) {
+            $alumno->update($request->only(['num_ctrl']));
+        }
+
+        return $this->sendResponse($alumno->load('usuario'), 'Datos actualizados correctamente.');
     }
 
     // Eliminar

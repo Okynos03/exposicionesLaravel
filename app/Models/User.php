@@ -45,4 +45,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Alumno::class, 'id_usuario', 'id_usuario');
     }
+
+    public function esMaestro()
+    {
+        return $this->id_rol === 1;
+    }
+
+    public function esAlumno()
+    {
+        return $this->id_rol === 2;
+    }
 }
