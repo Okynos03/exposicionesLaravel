@@ -1,0 +1,166 @@
+{
+  "login_maestro": {
+    "endpoint": "POST /api/login",
+    "body": {
+      "email": "maestro@test.com",
+      "password": "secret123"
+    }
+  },
+
+  "login_alumno": {
+    "endpoint": "POST /api/login",
+    "body": {
+      "email": "alumno@test.com",
+      "password": "secret123"
+    }
+  },
+
+  "usuario_actual": {
+    "endpoint": "GET /api/me",
+    "body": null
+  },
+
+  "logout": {
+    "endpoint": "POST /api/logout",
+    "body": null
+  },
+
+  "listar_alumnos": {
+    "endpoint": "GET /api/alumnos",
+    "body": null
+  },
+
+  "crear_alumno": {
+    "endpoint": "POST /api/alumnos",
+    "body": {
+      "nombre": "Nuevo Alumno",
+      "email": "nuevo.alumno@test.com",
+      "password": "password123",
+      "num_ctrl": "22030129",
+      "id_rol": 2
+    }
+  },
+
+  "mostrar_alumno": {
+    "endpoint": "GET /api/alumnos/{id}",
+    "body": null
+  },
+
+  "actualizar_alumno": {
+    "endpoint": "PUT /api/alumnos/{id}",
+    "body": {
+      "nombre": "Alumno Actualizado",
+      "email": "alumno.actualizado@test.com",
+      "password": "newpassword123",
+      "num_ctrl": "22030130",
+      "id_rol": 2
+    }
+  },
+
+  "eliminar_alumno": {
+    "endpoint": "DELETE /api/alumnos/{id}",
+    "body": null
+  },
+
+  "listar_maestros": {
+    "endpoint": "GET /api/maestros",
+    "body": null
+  },
+
+  "crear_maestro": {
+    "endpoint": "POST /api/maestros",
+    "body": {
+      "nombre": "Nuevo Maestro",
+      "email": "nuevo.maestro@test.com",
+      "password": "password123",
+      "id_rol": 1
+    }
+  },
+
+  "listar_rubricas": {
+    "endpoint": "GET /api/rubricas",
+    "body": null
+  },
+
+  "crear_rubrica": {
+    "endpoint": "POST /api/rubricas",
+    "body": {
+      "titulo": "Rúbrica de Exposición",
+      "descripcion": "Evaluación de presentaciones",
+      "id_maestro": 1
+    }
+  },
+
+  "listar_exposiciones": {
+    "endpoint": "GET /api/exposiciones",
+    "body": null
+  },
+
+  "crear_exposicion": {
+    "endpoint": "POST /api/exposiciones",
+    "body": {
+      "titulo": "Exposición de Matemáticas",
+      "descripcion": "Presentación sobre álgebra",
+      "fecha": "2026-03-15",
+      "hora": "10:00:00",
+      "id_equipo": 1,
+      "id_rubrica": 1
+    }
+  },
+
+  "listar_evaluaciones": {
+    "endpoint": "GET /api/evaluaciones",
+    "body": null
+  },
+
+  "crear_evaluacion": {
+    "endpoint": "POST /api/evaluaciones",
+    "body": {
+      "comentarios": "Excelente presentación",
+      "calificacion_final": 95.5,
+      "id_exposicion": 1,
+      "id_maestro": 1
+    }
+  },
+
+  "listar_grupos": {
+    "endpoint": "GET /api/grupos",
+    "body": null
+  },
+
+  "crear_grupo": {
+    "endpoint": "POST /api/grupos",
+    "body": {
+      "nombre_grupo": "Grupo A",
+      "id_materia": 1,
+      "id_maestro": 1
+    }
+  },
+
+  "inscribir_alumnos_grupo": {
+    "endpoint": "POST /api/grupos/{id}/inscribir",
+    "body": {
+      "alumnos": [1, 2, 3]
+    }
+  },
+
+  "listar_equipos": {
+    "endpoint": "GET /api/equipos",
+    "body": null
+  },
+
+  "crear_equipo": {
+    "endpoint": "POST /api/equipos",
+    "body": {
+      "nombre_equipo": "Equipo Alpha",
+      "id_grupo": 1
+    }
+  },
+
+  "actualizar_integrantes_equipo": {
+    "endpoint": "PUT /api/equipos/{id}/integrantes",
+    "body": {
+      "integrantes": [1, 2]
+    }
+  }
+}
