@@ -30,6 +30,18 @@ class RubricaController extends Controller
             'criterios.*.porcentaje' => 'required|numeric|min:1|max:100',
         ]);
 
+        // Calculamos la suma de los porcentajes enviados
+        $sumaPorcentajes = collect($request->criterios)->sum('porcentaje');
+
+        if ($sumaPorcentajes != 100) {
+            return $this->sendError(
+                'Validación de ponderación fallida.', 
+                ['error' => "La suma de los criterios debe ser 100%. Suma actual: {$sumaPorcentajes}%"], 
+                422
+            );
+        }
+        // ------------------------------
+
         try {
             $nuevaRubrica = DB::transaction(function () use ($request) {
                 // 1. Crear la cabecera de la rúbrica
@@ -54,7 +66,6 @@ class RubricaController extends Controller
             return $this->sendError('Error al crear la rúbrica.', [$e->getMessage()], 500);
         }
     }
-
     /**
      * Mostrar una rúbrica específica
      */
